@@ -159,6 +159,11 @@ public class MainActivity extends AppCompatActivity {
             // Permission is not granted, request it
             requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, REQUEST_CODE);
         }
+        /**
+         * Button shadow
+         */
+        binding.buttonExport.setShadowLayer(7,7,7,R.color.black);
+        binding.buttonAddNewMember.setShadowLayer(7,7,7,R.color.black);
     }
 
     private static final int REQUEST_CODE = 49;

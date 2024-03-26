@@ -110,7 +110,7 @@ public class MemberDetailsClickHandlers {
 
     public void onClickUpdate(@NonNull View view) {
         binding.buttonUpdateInfo.setBackgroundResource(R.drawable.simple_button_background_onclick);
-        binding.buttonUpdateInfo.setShadowLayer(0, 0, 0, R.color.white);
+        binding.buttonUpdateInfo.setShadowLayer(0,7,7,R.color.black);
         binding.buttonUpdateInfo.setTextColor(Color.BLACK);
         new Handler().postDelayed(new Runnable() {
             @Override
@@ -245,7 +245,7 @@ public class MemberDetailsClickHandlers {
                     }
                 }
                 binding.buttonUpdateInfo.setBackgroundResource(R.drawable.simple_button_backgound);
-                binding.buttonUpdateInfo.setShadowLayer(7, 7, 7, R.color.black);
+                binding.buttonUpdateInfo.setShadowLayer(7,7,7,R.color.black);
                 binding.buttonUpdateInfo.setTextColor(Color.WHITE);
                 Log.i("BECHJ", "MemberDetailsClickHandlers ::  onClickUpdate():: " + "EDIT MEMBER BUTTON BUTTON CLICKED");
             }
@@ -254,14 +254,12 @@ public class MemberDetailsClickHandlers {
 
     public void onClickCancel(@NonNull View view) {
         binding.buttonCancel.setBackgroundResource(R.drawable.simple_button_background_onclick);
-        binding.buttonCancel.setShadowLayer(0, 0, 0, R.color.green);
         binding.buttonCancel.setTextColor(Color.BLACK);
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
                 binding.buttonCancel.setBackgroundResource(R.drawable.simple_table_border);
-                binding.buttonCancel.setShadowLayer(7, 7, 7, R.color.red);
-                binding.buttonCancel.setTextColor(Color.WHITE);
+                binding.buttonCancel.setTextColor(Color.RED);
                 Log.i("BECHJ", "MemberDetailsClickHandlers :: onClickCancel :: " + "EDIT MEMBER BUTTON BUTTON CLICKED");
                 activity.finish();
             }

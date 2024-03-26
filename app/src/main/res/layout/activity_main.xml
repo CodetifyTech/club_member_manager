@@ -17,7 +17,7 @@
             android:id="@+id/activity_title"
             android:textStyle="bold"
             android:textColor="@color/white"
-            android:background="@drawable/main_background"
+
             android:shadowDy="7"
             android:shadowDx="7"
             android:shadowRadius="7"
@@ -35,6 +35,7 @@
             android:id="@+id/memberTableHeader"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_margin="4dp"
             app:layout_constraintTop_toBottomOf="@+id/activity_title">
 
 
@@ -65,6 +66,7 @@
                     android:text="Họ Tên"
                     android:textAlignment="center"
                     android:textSize="26sp"
+                    android:layout_margin="1dp"
                     android:textStyle="bold"
                     android:textColor="@color/white"
                     android:background="@drawable/simple_table_border"
@@ -83,6 +85,7 @@
                     android:textColor="@color/white"
                     android:background="@drawable/simple_table_border"
                     android:shadowDy="7"
+                    android:layout_margin="1dp"
                     android:shadowDx="7"
                     android:shadowRadius="7"
                     android:shadowColor="@color/black"
@@ -99,55 +102,58 @@
             app:layout_constraintTop_toBottomOf="@+id/memberTableHeader" />
 
         <LinearLayout
+            android:id="@+id/linearLayout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="16dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent">
+
             <TextView
                 android:id="@+id/buttonAddNewMember"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Thêm Thành Viên"
-                android:onClick="@{onClickHandler::onClickAddNewMember}"
-                android:textColor="@color/white"
-                android:background="@drawable/simple_button_backgound"
-                android:shadowDy="7"
-                android:shadowDx="7"
-                android:shadowRadius="7"
-                android:shadowColor="@color/black"
-                android:textAlignment="center"
-                android:textSize="26sp"
-                android:textStyle="bold"
-                android:padding="10dp"
                 android:layout_margin="1dp"
-                />
+                android:background="@drawable/simple_button_backgound"
+                android:onClick="@{onClickHandler::onClickAddNewMember}"
+                android:padding="10dp"
+                android:shadowColor="@color/black"
+                android:shadowDx="7"
+                android:shadowDy="7"
+                android:shadowRadius="7"
+                android:text="Thêm Thành Viên"
+                android:textAlignment="center"
+                android:textColor="@color/white"
+                android:textSize="26sp"
+                android:textStyle="bold" />
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="16dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent">
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            app:layout_constraintBottom_toBottomOf="@+id/linearLayout"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/linearLayout">
+
             <TextView
                 android:id="@+id/buttonExport"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Xuất file"
-                android:onClick="@{onClickHandler::onClickExport}"
-                android:textColor="@color/white"
-                android:background="@drawable/simple_button_backgound"
-                android:shadowDy="7"
-                android:shadowDx="7"
-                android:shadowRadius="7"
-                android:shadowColor="@color/black"
-                android:textAlignment="center"
-                android:textSize="26sp"
-                android:textStyle="bold"
-                android:padding="10dp"
                 android:layout_margin="1dp"
-                />
+                android:background="@drawable/simple_button_backgound"
+                android:onClick="@{onClickHandler::onClickExport}"
+                android:padding="10dp"
+                android:shadowColor="@color/black"
+                android:shadowDx="7"
+                android:shadowDy="7"
+                android:shadowRadius="7"
+                android:text="Xuất file"
+                android:textAlignment="center"
+                android:textColor="@color/white"
+                android:textSize="26sp"
+                android:textStyle="bold" />
         </LinearLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

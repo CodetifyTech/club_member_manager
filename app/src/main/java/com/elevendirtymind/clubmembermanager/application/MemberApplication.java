@@ -37,40 +37,11 @@ public class MemberApplication extends Application {
         return firebaseStorage;
     }
 
-    /***
-     * TEST SUCCEED
-     * @param
-     */
-//    public void testInstance(@NonNull String referenceCaseSensitive) {
-//        DatabaseReference reference = instance.getReference(referenceCaseSensitive);
-//        Member member = new Member(
-//                "DTC20H4801030029",
-//                "BE CHI KIEN",
-//                "0979965784",
-//                "BAC GIANG",
-//                "BAN CHU NHIEM",
-//                "KTPM",
-//                "CNTT",
-//                "KTPM - K19A");
-//        reference.child(RealTimeDatabaseRef.refMainChildMember).child(member.getMaSinhVien()).setValue(member);
-//        Member member1 = new Member(
-//                "DTC20H4801030028",
-//                "TRAN DUY KHANH",
-//                "0979965784",
-//                "BAC GIANG",
-//                "BAN CHU NHIEM",
-//                "KTPM",
-//                "CNTT",
-//                "KTPM - K19A");
-//        reference.child(RealTimeDatabaseRef.refMainChildMember).child(member1.getMaSinhVien()).setValue(member1);
-//    }
-
     @Override
     public void onCreate() {
         super.onCreate();
         FirebaseApp.initializeApp(this);
         getDatabaseInstance();
         getFireStorage();
-//        testInstance(RealTimeDatabaseRef.refMain);
     }
 }

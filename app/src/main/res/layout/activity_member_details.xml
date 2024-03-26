@@ -21,7 +21,7 @@
     <androidx.appcompat.widget.LinearLayoutCompat
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/main_background"
+        android:background="@color/white"
         android:orientation="vertical"
         android:weightSum="8"
         tools:context=".activity.MemberDetailsActivity">
@@ -243,7 +243,7 @@
                 android:onClick="@{onClickUpdateInfo::onClickCancel}"
                 android:padding="6dp"
                 android:text="Huỷ"
-                android:textColor="#F80000"
+                android:textColor="@color/red"
                 android:textSize="20sp"
                 android:textStyle="bold" />
 

@@ -9,15 +9,18 @@
     </data>
     <androidx.cardview.widget.CardView
         android:id="@+id/memberView"
+        android:layout_margin="4dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <LinearLayout
+            android:orientation="horizontal"
             android:layout_width="match_parent"
             android:weightSum="1000"
             android:layout_height="match_parent">
             <TextView
                 android:id="@+id/uid"
                 android:visibility="gone"
+                android:layout_margin="1dp"
                 android:text="@{member.maSinhVien}"
                 android:textColor="@color/white"
                 android:shadowDy="7"
@@ -40,7 +43,7 @@
                 android:shadowDy="7"
                 android:shadowDx="7"
                 android:shadowRadius="7"
-
+                android:layout_margin="1dp"
                 android:shadowColor="@color/black"
                 android:paddingStart="4dp"
                 android:paddingTop="16dp"
@@ -58,6 +61,7 @@
                 android:paddingBottom="16dp"
                 android:text="@{member.lop}"
                 android:textSize="22sp"
+                android:layout_margin="1dp"
                 android:paddingStart="4dp"
                 android:textColor="@color/white"
                 android:shadowDy="7"

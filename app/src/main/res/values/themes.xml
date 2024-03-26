@@ -3,6 +3,8 @@
     <style name="Base.Theme.ClubMemberManager" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Customize your light theme here. -->
         <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+        <item name="statusBarBackground">@drawable/main_background</item>
+        <item name="android:statusBarColor">@color/fui_transparent</item>
     </style>
 
     <style name="Theme.ClubMemberManager" parent="Base.Theme.ClubMemberManager" />
