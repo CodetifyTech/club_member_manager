@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout  xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+<data>
+    <variable
+        name="onClickHandler"
+        type="com.elevendirtymind.clubmembermanager.clickhandler.MainActivityClickHandlers" />
+</data>
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/main_background"
+        tools:context=".activity.MainActivity">
+
+        <TextView
+            android:id="@+id/activity_title"
+            android:textStyle="bold"
+            android:textColor="@color/white"
+            android:background="@drawable/main_background"
+            android:shadowDy="7"
+            android:shadowDx="7"
+            android:shadowRadius="7"
+            android:shadowColor="@color/black"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAlignment="center"
+            android:text="Danh Sách Thành Viên"
+            android:textSize="30sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/memberTableHeader"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@+id/activity_title">
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:weightSum="1000"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:visibility="gone"
+                    android:layout_weight="0"
+                    android:text="Mã SV"
+                    android:textAlignment="center"
+                    android:textSize="26sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/white"
+                    android:background="@drawable/simple_table_border"
+                    android:shadowDy="7"
+                    android:shadowDx="7"
+                    android:shadowRadius="7"
+                    android:shadowColor="@color/black"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"/>
+
+
+                <TextView
+                    android:layout_weight="500"
+                    android:text="Họ Tên"
+                    android:textAlignment="center"
+                    android:textSize="26sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/white"
+                    android:background="@drawable/simple_table_border"
+                    android:shadowDy="7"
+                    android:shadowDx="7"
+                    android:shadowRadius="7"
+                    android:shadowColor="@color/black"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"/>
+
+                <TextView
+                    android:layout_weight="500"
+                    android:text="Lớp" android:textAlignment="center"
+                    android:textSize="26sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/white"
+                    android:background="@drawable/simple_table_border"
+                    android:shadowDy="7"
+                    android:shadowDx="7"
+                    android:shadowRadius="7"
+                    android:shadowColor="@color/black"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"/>
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/memberRecyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/memberTableHeader" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent">
+            <TextView
+                android:id="@+id/buttonAddNewMember"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Thêm Thành Viên"
+                android:onClick="@{onClickHandler::onClickAddNewMember}"
+                android:textColor="@color/white"
+                android:background="@drawable/simple_button_backgound"
+                android:shadowDy="7"
+                android:shadowDx="7"
+                android:shadowRadius="7"
+                android:shadowColor="@color/black"
+                android:textAlignment="center"
+                android:textSize="26sp"
+                android:textStyle="bold"
+                android:padding="10dp"
+                android:layout_margin="1dp"
+                />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
+            <TextView
+                android:id="@+id/buttonExport"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Xuất file"
+                android:onClick="@{onClickHandler::onClickExport}"
+                android:textColor="@color/white"
+                android:background="@drawable/simple_button_backgound"
+                android:shadowDy="7"
+                android:shadowDx="7"
+                android:shadowRadius="7"
+                android:shadowColor="@color/black"
+                android:textAlignment="center"
+                android:textSize="26sp"
+                android:textStyle="bold"
+                android:padding="10dp"
+                android:layout_margin="1dp"
+                />
+        </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

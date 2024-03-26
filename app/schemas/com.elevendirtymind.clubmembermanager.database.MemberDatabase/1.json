@@ -1,0 +1,76 @@
+{
+  "formatVersion": 1,
+  "database": {
+    "version": 1,
+    "identityHash": "5ee9fdad8ea6f3890697e1aa22f71b5a",
+    "entities": [
+      {
+        "tableName": "members_table",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`ma_sinh_vien` TEXT NOT NULL, `ho_ten` TEXT NOT NULL, `so_dien_thoai` TEXT NOT NULL, `que_quan` TEXT NOT NULL, `chuc_vu_trong_clb` TEXT NOT NULL, `chuyen_nganh` TEXT NOT NULL, `khoa` TEXT NOT NULL, `lop` TEXT NOT NULL, PRIMARY KEY(`ma_sinh_vien`))",
+        "fields": [
+          {
+            "fieldPath": "maSinhVien",
+            "columnName": "ma_sinh_vien",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "hoTen",
+            "columnName": "ho_ten",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "sdt",
+            "columnName": "so_dien_thoai",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "queQuan",
+            "columnName": "que_quan",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "role",
+            "columnName": "chuc_vu_trong_clb",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "chuyenNganh",
+            "columnName": "chuyen_nganh",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "khoa",
+            "columnName": "khoa",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "lop",
+            "columnName": "lop",
+            "affinity": "TEXT",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "ma_sinh_vien"
+          ]
+        },
+        "indices": [],
+        "foreignKeys": []
+      }
+    ],
+    "views": [],
+    "setupQueries": [
+      "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '5ee9fdad8ea6f3890697e1aa22f71b5a')"
+    ]
+  }
+}

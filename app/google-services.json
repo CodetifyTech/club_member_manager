@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "994449845746",
+    "firebase_url": "https://admin-030724-default-rtdb.firebaseio.com",
+    "project_id": "admin-030724",
+    "storage_bucket": "admin-030724.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:994449845746:android:cccbe0b40d9e3caf3bcf6b",
+        "android_client_info": {
+          "package_name": "com.elevendirtymind.clubmembermanager"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "994449845746-jk1r9sem3313o2o07nqp86t9ookcq9kv.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDGM5vAaToFxPfvQV4W8gJWvqkjzg9EeU4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "994449845746-jk1r9sem3313o2o07nqp86t9ookcq9kv.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

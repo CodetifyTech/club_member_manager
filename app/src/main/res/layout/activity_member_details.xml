@@ -1,0 +1,274 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="member"
+            type="com.elevendirtymind.clubmembermanager.model.Member" />
+
+        <variable
+            name="memberModelViewModel"
+            type="com.elevendirtymind.clubmembermanager.viewmodel.ModelMemberViewModel" />
+
+        <variable
+            name="onClickUpdateInfo"
+            type="com.elevendirtymind.clubmembermanager.clickhandler.MemberDetailsClickHandlers" />
+    </data>
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/main_background"
+        android:orientation="vertical"
+        android:weightSum="8"
+        tools:context=".activity.MemberDetailsActivity">
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:layout_margin="4dp"
+            android:layout_weight="1"
+            android:hint="Họ Tên"
+            android:textColorHint="@color/black">
+
+            <EditText
+                android:id="@+id/editTextHoTen"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:enabled="false"
+                android:inputType="text"
+                android:onTextChanged="@{memberModelViewModel::updateHoTen}"
+                android:shadowColor="@color/black"
+                android:shadowDx="7"
+                android:shadowDy="7"
+                android:shadowRadius="20"
+                android:text="@{memberModelViewModel.liveMember.hoTen}"
+                android:textAlignment="center"
+                android:textAllCaps="true"
+                android:textColor="@color/white"
+                android:textSize="24sp"
+                android:textStyle="bold" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:layout_margin="4dp"
+            android:layout_weight="1"
+            android:hint="Mã Sinh Viên"
+            android:textColorHint="@color/black">
+
+            <EditText
+                android:id="@+id/editTextMaSinhVien"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:enabled="false"
+                android:inputType="text"
+                android:onTextChanged="@{memberModelViewModel::updateMaSinhVien}"
+                android:shadowColor="@color/black"
+                android:shadowDx="7"
+                android:shadowDy="7"
+                android:shadowRadius="20"
+                android:text="@{memberModelViewModel.liveMember.maSinhVien}"
+                android:textColor="@color/white"
+                android:textStyle="bold" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:layout_margin="4dp"
+            android:layout_weight="1"
+            android:hint="Số Điện Thoại"
+            android:textColorHint="@color/black">
+
+            <EditText
+                android:id="@+id/editTextSDT"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:enabled="false"
+                android:inputType="phone"
+                android:onTextChanged="@{memberModelViewModel::updateSDT}"
+                android:shadowColor="@color/black"
+                android:shadowDx="7"
+                android:shadowDy="7"
+                android:shadowRadius="20"
+                android:text="@{memberModelViewModel.liveMember.sdt}"
+                android:textColor="@color/white"
+                android:textStyle="bold" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:layout_margin="4dp"
+            android:layout_weight="1"
+
+            android:hint="Quê Quán"
+            android:textColorHint="@color/black">
+
+            <EditText
+                android:id="@+id/editTextQueQuan"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:enabled="false"
+                android:inputType="text"
+                android:onTextChanged="@{memberModelViewModel::updateQueQuan}"
+                android:shadowColor="@color/black"
+                android:shadowDx="7"
+                android:shadowDy="7"
+                android:shadowRadius="20"
+                android:text="@{memberModelViewModel.liveMember.queQuan}"
+                android:textColor="@color/white"
+                android:textStyle="bold" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:layout_margin="4dp"
+            android:layout_weight="1"
+            android:hint="Chức vụ trong câu lạc bộ"
+            android:textColor="@color/white"
+            android:textColorHint="@color/black">
+
+            <EditText
+                android:id="@+id/editTextChucVu"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:enabled="false"
+                android:onTextChanged="@{memberModelViewModel::updateRole}"
+                android:shadowColor="@color/black"
+                android:shadowDx="7"
+                android:shadowDy="7"
+                android:shadowRadius="20"
+                android:text="@{memberModelViewModel.liveMember.role}"
+                android:textColor="@color/white"
+                android:textStyle="bold" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:layout_margin="4dp"
+            android:layout_weight="1"
+            android:hint="Chuyên Ngành"
+            android:textColorHint="@color/black">
+
+            <EditText
+                android:id="@+id/editTextChuyenNganh"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:enabled="false"
+                android:inputType="text"
+                android:onTextChanged="@{memberModelViewModel::updateChuyenNganh}"
+                android:shadowColor="@color/black"
+                android:shadowDx="7"
+                android:shadowDy="7"
+                android:shadowRadius="20"
+                android:text="@{memberModelViewModel.liveMember.chuyenNganh}"
+                android:textColor="@color/white"
+                android:textStyle="bold" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:layout_margin="4dp"
+            android:layout_weight="1"
+            android:hint="Khoa"
+            android:textColorHint="@color/black">
+
+            <EditText
+                android:id="@+id/editTextKhoa"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:enabled="false"
+                android:inputType="text"
+                android:onTextChanged="@{memberModelViewModel::updateKhoa}"
+                android:shadowColor="@color/black"
+                android:shadowDx="7"
+                android:shadowDy="7"
+                android:shadowRadius="20"
+                android:text="@{memberModelViewModel.liveMember.khoa}"
+                android:textColor="@color/white"
+                android:textStyle="bold" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:layout_margin="4dp"
+            android:layout_weight="1"
+            android:hint="Lớp"
+            android:textColorHint="@color/black">
+
+            <EditText
+                android:id="@+id/editTextLop"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:enabled="false"
+                android:inputType="text"
+                android:onTextChanged="@{memberModelViewModel::updateLop}"
+                android:shadowColor="@color/black"
+                android:shadowDx="7"
+                android:shadowDy="7"
+                android:shadowRadius="20"
+                android:text="@{memberModelViewModel.liveMember.lop}"
+                android:textColor="@color/white"
+                android:textStyle="bold" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_margin="16dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent">
+
+            <TextView
+                android:id="@+id/buttonCancel"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
+                android:background="@drawable/simple_table_border"
+                android:gravity="center"
+                android:onClick="@{onClickUpdateInfo::onClickCancel}"
+                android:padding="6dp"
+                android:text="Huỷ"
+                android:textColor="#F80000"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/buttonUpdateInfo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
+                android:background="@drawable/simple_button_backgound"
+                android:gravity="center"
+                android:onClick="@{onClickUpdateInfo::onClickUpdate}"
+                android:padding="10dp"
+                android:shadowColor="@color/black"
+                android:shadowDx="7"
+                android:shadowDy="7"
+                android:shadowRadius="7"
+                android:text="CHỈNH SỬA THÔNG TIN"
+                android:textAlignment="center"
+                android:textAllCaps="true"
+                android:textColor="@color/white"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+</layout>
