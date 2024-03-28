@@ -20,7 +20,7 @@ public abstract class MemberDatabase extends RoomDatabase {
         if (instance == null) {
             instance = Room.databaseBuilder(context.getApplicationContext(), MemberDatabase.class, "members_club_db")
                     .fallbackToDestructiveMigration().build();
-            Log.i("BECHJ", "MemberDatabase :: getInstance() :: INSTANCE DATABASE GENERATED");
+            Log.i("TAGMAIN", "MemberDatabase :: getInstance() :: INSTANCE DATABASE GENERATED");
         }
         return instance;
     }

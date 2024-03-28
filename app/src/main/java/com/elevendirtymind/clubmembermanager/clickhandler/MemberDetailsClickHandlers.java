@@ -65,13 +65,13 @@ public class MemberDetailsClickHandlers {
                     public void onChanged(Member member) {
                         existingMemberInRoomDatabase = member;
                         if (existingMemberInRoomDatabase != null) {
-                            Log.i("BECHJ", "MemberDetailsClickHandlers :: memberModelViewModel.getLiveMember() :: Mã Thành Viên đã có trong danh sách -> " + existingMemberInRoomDatabase);
+                            Log.i("TAGMAIN", "MemberDetailsClickHandlers :: memberModelViewModel.getLiveMember() :: Mã Thành Viên đã có trong danh sách -> " + existingMemberInRoomDatabase);
                         } else {
-                            Log.i("BECHJ", "MemberDetailsClickHandlers :: memberModelViewModel.getLiveMember() :: Mã Thành Viên không tồn tại, có thể thêm danh sách -> " + existingMemberInRoomDatabase);
+                            Log.i("TAGMAIN", "MemberDetailsClickHandlers :: memberModelViewModel.getLiveMember() :: Mã Thành Viên không tồn tại, có thể thêm danh sách -> " + existingMemberInRoomDatabase);
                         }
                     }
                 });
-                Log.i("BECHJ", "MemberDetailsClickHandlers :: observing :: " + observedMember.toString());
+                Log.i("TAGMAIN", "MemberDetailsClickHandlers :: observing :: " + observedMember.toString());
             }
         });
         binding.setMemberModelViewModel(memberModelViewModel);
@@ -100,12 +100,12 @@ public class MemberDetailsClickHandlers {
                     observedMember = member;
                     memberModelViewModel.updateLiveMember(observedMember);
                     binding.setMember(memberModelViewModel.getLiveMember().getValue());
-                    Log.i("BECHJ", "MemberDetailsClickHandlers :: observing :: " + observedMember.toString());
+                    Log.i("TAGMAIN", "MemberDetailsClickHandlers :: observing :: " + observedMember.toString());
                 }
             });
         }
 
-        Log.i("BECHJ", "MemberDetailsClickHandlers :: " + "CLICK HANDLER MEMBER DETAILS GENERATED");
+        Log.i("TAGMAIN", "MemberDetailsClickHandlers :: " + "CLICK HANDLER MEMBER DETAILS GENERATED");
     }
 
     public void onClickUpdate(@NonNull View view) {
@@ -247,7 +247,7 @@ public class MemberDetailsClickHandlers {
                 binding.buttonUpdateInfo.setBackgroundResource(R.drawable.simple_button_backgound);
                 binding.buttonUpdateInfo.setShadowLayer(7,7,7,R.color.black);
                 binding.buttonUpdateInfo.setTextColor(Color.WHITE);
-                Log.i("BECHJ", "MemberDetailsClickHandlers ::  onClickUpdate():: " + "EDIT MEMBER BUTTON BUTTON CLICKED");
+                Log.i("TAGMAIN", "MemberDetailsClickHandlers ::  onClickUpdate():: " + "EDIT MEMBER BUTTON BUTTON CLICKED");
             }
         }, 100);
     }
@@ -260,7 +260,7 @@ public class MemberDetailsClickHandlers {
             public void run() {
                 binding.buttonCancel.setBackgroundResource(R.drawable.simple_table_border);
                 binding.buttonCancel.setTextColor(Color.RED);
-                Log.i("BECHJ", "MemberDetailsClickHandlers :: onClickCancel :: " + "EDIT MEMBER BUTTON BUTTON CLICKED");
+                Log.i("TAGMAIN", "MemberDetailsClickHandlers :: onClickCancel :: " + "EDIT MEMBER BUTTON BUTTON CLICKED");
                 activity.finish();
             }
         }, 100);

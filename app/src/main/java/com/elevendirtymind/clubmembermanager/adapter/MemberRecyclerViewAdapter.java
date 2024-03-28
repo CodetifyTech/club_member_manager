@@ -46,7 +46,7 @@ public class MemberRecyclerViewAdapter extends RecyclerView.Adapter<MemberRecycl
                 parent,
                 false
         );
-        Log.i("BECHJ", "MemberRecyclerViewAdapter :: onCreateViewHolder() :: " + "Inflate Member Item View Successful");
+        Log.i("TAGMAIN", "MemberRecyclerViewAdapter :: onCreateViewHolder() :: " + "Inflate Member Item View Successful");
         return new MemberViewHolder(binding);
     }
 
@@ -54,8 +54,8 @@ public class MemberRecyclerViewAdapter extends RecyclerView.Adapter<MemberRecycl
     public void onBindViewHolder(@NonNull MemberViewHolder holder, int position) {
         Member member = members.get(position);
         holder.setIndex(position);
-        Log.i("BECHJ", "MemberRecyclerViewAdapter :: onBindViewHolder() :: " + member.toString());
-        Log.i("BECHJ", "MemberRecyclerViewAdapter :: onBindViewHolder() :: " + member.getHoTen() + " index=\'" + holder.getIndex() + "\'");
+        Log.i("TAGMAIN", "MemberRecyclerViewAdapter :: onBindViewHolder() :: " + member.toString());
+        Log.i("TAGMAIN", "MemberRecyclerViewAdapter :: onBindViewHolder() :: " + member.getHoTen() + " index=\'" + holder.getIndex() + "\'");
         holder.binding.setMember(member);
         holder.binding.memberView.setOnClickListener(v -> {
             onClickMember.onClickMember(member, holder.getIndex());

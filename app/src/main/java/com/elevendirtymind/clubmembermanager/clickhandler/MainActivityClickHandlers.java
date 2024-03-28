@@ -31,7 +31,7 @@ public class MainActivityClickHandlers {
         this.binding = binding;
         this.memberList = memberList;
         this.memberApplication = new MemberApplication();
-        Log.i("BECHJ", "MainActivityClickHandlers() :: CLICK HANDLER MAIN ACTIVITY GENERATED");
+        Log.i("TAGMAIN", "MainActivityClickHandlers() :: CLICK HANDLER MAIN ACTIVITY GENERATED");
     }
 
     public void onClickAddNewMember(@NonNull View view) {
@@ -47,14 +47,14 @@ public class MainActivityClickHandlers {
                 Intent i = new Intent(activity, MemberDetailsActivity.class);
                 i.putExtra("command", "INSERT");
                 activity.startActivity(i);
-                Log.i("BECHJ", "onClickAddNewMember() :: ADD NEW BUTTON CLICKED");
+                Log.i("TAGMAIN", "onClickAddNewMember() :: ADD NEW BUTTON CLICKED");
             }
         }, 100);
     }
 
     public void onClickMemberItem(@NonNull Member member, @NonNull int ClickPosition) {
-        Log.i("BECHJ", "onClickMember() :: Member Clicked: " + member.toString());
-        Log.i("BECHJ", "onClickMember() :: Member Position: " + ClickPosition);
+        Log.i("TAGMAIN", "onClickMember() :: Member Clicked: " + member.toString());
+        Log.i("TAGMAIN", "onClickMember() :: Member Position: " + ClickPosition);
         Intent i = new Intent(activity, MemberDetailsActivity.class);
         i.putExtra("id", member.getMaSinhVien());
         i.putExtra("command", "UPDATE");
@@ -74,7 +74,7 @@ public class MainActivityClickHandlers {
                 binding.buttonExport.setShadowLayer(7,7,7,R.color.black);
                 binding.buttonExport.setTextColor(Color.WHITE);
                 Export.exportTest(activity,memberApplication,memberList);
-                Log.i("BECHJ", "onClickExport() :: Export Clicked");
+                Log.i("TAGMAIN", "onClickExport() :: Export Clicked");
             }
         }, 100);
     }

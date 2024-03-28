@@ -46,10 +46,10 @@ public class MemberRepository {
             public void run() {
                 try {
                     dao.Insert(member);
-                    Log.i("BECHJ", "MemberRepository :: InsertMember() :: " + "Thêm thành viên xong!");
+                    Log.i("TAGMAIN", "MemberRepository :: InsertMember() :: " + "Thêm thành viên xong!");
                 } catch (Exception e) {
                     e.printStackTrace();
-                    Log.i("BECHJ", "MemberRepository :: InsertMember() :: " + e.getMessage());
+                    Log.i("TAGMAIN", "MemberRepository :: InsertMember() :: " + e.getMessage());
                 }
             }
         });
@@ -61,10 +61,10 @@ public class MemberRepository {
             public void run() {
                 try {
                     dao.Update(member);
-                    Log.i("BECHJ", "MemberRepository :: UpdateMember() ::" + "Thành viên được cập nhật dữ liệu");
+                    Log.i("TAGMAIN", "MemberRepository :: UpdateMember() ::" + "Thành viên được cập nhật dữ liệu");
                 } catch (Exception e) {
                     e.printStackTrace();
-                    Log.i("BECHJ", "MemberRepository :: UpdateMember() :: " + e.getMessage());
+                    Log.i("TAGMAIN", "MemberRepository :: UpdateMember() :: " + e.getMessage());
                 }
             }
         });
@@ -80,11 +80,11 @@ public class MemberRepository {
                             .child(RealTimeDatabaseRef.refMainChildMember)
                             .child(member.getMaSinhVien()).removeValue();
 
-                    Log.i("BECHJ", "MemberRepository :: DeleteMember() ::" + "Thành viên đã bị xóa đi tồn tại");
+                    Log.i("TAGMAIN", "MemberRepository :: DeleteMember() ::" + "Thành viên đã bị xóa đi tồn tại");
 
                 } catch (Exception e) {
                     e.printStackTrace();
-                    Log.i("BECHJ", "MemberRepository :: DeleteMember() ::" + e.getMessage());
+                    Log.i("TAGMAIN", "MemberRepository :: DeleteMember() ::" + e.getMessage());
                 }
             }
         });
@@ -98,14 +98,14 @@ public class MemberRepository {
                     if (memberListLiveData != null) {
                         List<Member> members = memberListLiveData.getValue();
                         if (members != null) {
-                            Log.i("BECHJ", "MemberRepository :: getAllMembers() :: " + "Danh sách tồn tại! " + memberListLiveData.getValue().toString());
+                            Log.i("TAGMAIN", "MemberRepository :: getAllMembers() :: " + "Danh sách tồn tại! " + memberListLiveData.getValue().toString());
                         } else {
-                            Log.i("BECHJ", "MemberRepository :: getAllMembers() :: " + "Danh sách không tồn tại! ");
+                            Log.i("TAGMAIN", "MemberRepository :: getAllMembers() :: " + "Danh sách không tồn tại! ");
                         }
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
-                    Log.i("BECHJ", "MemberRepository :: getAllMembers() :: " + e.getMessage());
+                    Log.i("TAGMAIN", "MemberRepository :: getAllMembers() :: " + e.getMessage());
                 }
         return memberListLiveData;
     }
@@ -118,14 +118,14 @@ public class MemberRepository {
                     if (memberLiveData != null) {
                         Member member = memberLiveData.getValue();
                         if (member != null) {
-                            Log.i("BECHJ", "MemberRepository :: getSpecificMember(id) :: " + "Thành viên tồn tại! " + memberLiveData.getValue().toString());
+                            Log.i("TAGMAIN", "MemberRepository :: getSpecificMember(id) :: " + "Thành viên tồn tại! " + memberLiveData.getValue().toString());
                         } else {
-                            Log.i("BECHJ", "MemberRepository :: getSpecificMember(id) :: " + "Thành viên không tồn tại! ");
+                            Log.i("TAGMAIN", "MemberRepository :: getSpecificMember(id) :: " + "Thành viên không tồn tại! ");
                         }
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
-                    Log.i("BECHJ", "MemberRepository :: getSpecificMember(id) :: " + e.getMessage());
+                    Log.i("TAGMAIN", "MemberRepository :: getSpecificMember(id) :: " + e.getMessage());
                 }
         return memberLiveData;
     }

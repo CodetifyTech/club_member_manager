@@ -175,56 +175,12 @@ public class MainActivity extends AppCompatActivity {
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 // Permission granted, proceed with file operation
                 File internalStorageDir = getFilesDir(); // Thư mục lưu trữ trên bộ nhớ trong
-                Log.i("BECHJ", "MainActivity :: Permission Read Storage :: " + "Internal Storage Path: " + internalStorageDir.getAbsolutePath());
+                Log.i("TAGMAIN", "MainActivity :: Permission Read Storage :: " + "Internal Storage Path: " + internalStorageDir.getAbsolutePath());
             } else {
                 // Permission denied, handle accordingly
             }
         }
     }
-
-//    private void iniDat() {
-//        Member m1 = new Member(
-//                "DTC20H4801030029",
-//                "BE CHI KIEN",
-//                "0979965784",
-//                "BAC GIANG",
-//                "BAN CHU NHIEM",
-//                "KTPM",
-//                "CNTT",
-//                "KTPM - K19A");
-//        Member member1 = new Member(
-//                "DTC20H4801030028",
-//                "TRAN DUY KHANH",
-//                "0979965784",
-//                "BAC GIANG",
-//                "BAN CHU NHIEM",
-//                "KTPM",
-//                "CNTT",
-//                "KTPM - K19A");
-//        memberViewModel.InsertMember(m1);
-//        memberViewModel.InsertMember(member1);
-//    }
-
-//    private void swipeToDelete() {
-//         /*
-//        Swipe to delete
-//        new ItemTouchHelper.SimpleCallback(0,ItemTouchHelper.LEFT)
-//        the first param `0` specify the drag and drop directions,0 is no drag and drop action is supported
-//        the second param `ItemTouchHelper.LEFT` specify the swipe direction. In this case `to the left` supported
-//         */
-//        new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {
-//            @Override
-//            public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
-//                return false;
-//            }
-//
-//            @Override
-//            public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
-//                Member member = memberList.get(viewHolder.getAdapterPosition());
-//                memberViewModel.DeleteMember(member);
-//            }
-//        }).attachToRecyclerView(binding.memberRecyclerView);
-//    }
 
     private Member backupMember = null;
 
@@ -269,7 +225,7 @@ public class MainActivity extends AppCompatActivity {
                             }
                         } catch (Exception e) {
                             e.printStackTrace();
-                            Log.i("BECHJ", "MainActivity :: On Delete Member ::" + e.getMessage());
+                            Log.i("TAGMAIN", "MainActivity :: On Delete Member ::" + e.getMessage());
                         }
 
                     }

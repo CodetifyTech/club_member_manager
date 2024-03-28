@@ -89,7 +89,7 @@ public class Export {
 
             // Get the directory for the app's internal files
             File internalDir = context.getFilesDir();
-            Log.i("BECHJ", "excel.Export :: exportTest() :: internalDir: " + internalDir.getAbsolutePath());
+            Log.i("TAGMAIN", "excel.Export :: exportTest() :: internalDir: " + internalDir.getAbsolutePath());
 
             // Specify the file path in internal storage
             File file = new File(internalDir, "members.xlsx");
@@ -99,14 +99,14 @@ public class Export {
             // Write to file
             try (FileOutputStream fileOut = new FileOutputStream(file)) {
                 workbook.write(fileOut);
-                Log.i("BECHJ", "excel.Export :: exportTest() :: File written to internal storage: " + file.getAbsolutePath());
+                Log.i("TAGMAIN", "excel.Export :: exportTest() :: File written to internal storage: " + file.getAbsolutePath());
 
 
                 /**
                  * Uploads to firebase Storage
                  */
                 Uri fileUri = Uri.fromFile(file);
-                Log.i("BECHJ", "excel.Export :: exportTest() ::  filePath() : " + fileUri.getPath() );
+                Log.i("TAGMAIN", "excel.Export :: exportTest() ::  filePath() : " + fileUri.getPath() );
                 String fileName = "members.xlsx";
                 storageRef = memberApplication.getFireStorage().getReference();
                 StorageReference fileRef = storageRef.child(fileName);
@@ -119,14 +119,14 @@ public class Export {
                     public void onFailure(@NonNull Exception exception) {
                         // Handle unsuccessful uploads
                         exception.printStackTrace();
-                        Log.i("BECHJ", "excel.Export :: exportTest() :: Firebase :: ERROR: " +exception.getMessage() );
+                        Log.i("TAGMAIN", "excel.Export :: exportTest() :: Firebase :: ERROR: " +exception.getMessage() );
                     }
                 }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                     @Override
                     public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                         // taskSnapshot.getMetadata() contains file metadata such as size, content-type, etc.
                         // ...
-                        Log.i("BECHJ", "excel.Export :: exportTest() :: Firease: DONE");
+                        Log.i("TAGMAIN", "excel.Export :: exportTest() :: Firease: DONE");
                         Toast.makeText(context, "Bạn có thể tìm thấy `members.xlsx` trong thư mục Download của thiết bị", Toast.LENGTH_LONG).show();
                     }
                 }).addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
@@ -134,7 +134,7 @@ public class Export {
                     public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task) {
                         if (task.isSuccessful()) {
                             // The upload is successful
-                            Log.d("BECHJ", "onCompleteListenter() OVERRIDE :: Upload successful");
+                            Log.d("TAGMAIN", "onCompleteListenter() OVERRIDE :: Upload successful");
 
                         } else {
                             /**
@@ -145,7 +145,7 @@ public class Export {
                             if (e.getMessage() != null && e.getMessage().contains("object")) {
                                 // If the file already exists, overwrite it
                                 fileRef.putStream(stream);
-                                Log.d("BECHJ", "onCompleteListenter() OVERRIDE :: Upload done");
+                                Log.d("TAGMAIN", "onCompleteListenter() OVERRIDE :: Upload done");
                                 Toast.makeText(context, "Bạn có thể tìm thấy `members.xlsx` trong thư mục Download của thiết bị", Toast.LENGTH_LONG).show();
                             }
                         }
@@ -168,24 +168,24 @@ public class Export {
 
                 fileRef.getFile(localFile)
                         .addOnSuccessListener(taskSnapshot -> {
-                            // File download success
-                            Log.d("BECHJ", "excel.Export :: exportTest() :: Firease: File downloaded to " + localFile.getAbsolutePath());
+                            // File TAGMAIN success
+                            Log.d("TAGMAIN", "excel.Export :: exportTest() :: Firease: File downloaded to " + localFile.getAbsolutePath());
                             // Handle the downloaded file, such as displaying it to the user
                         })
                         .addOnFailureListener(exception -> {
                             // File download failed
-                            Log.e("BECHJ", "excel.Export :: exportTest() :: Firease: Error downloading file: " + exception.getMessage());
+                            Log.e("TAGMAIN", "excel.Export :: exportTest() :: Firease: Error downloading file: " + exception.getMessage());
                             // Handle the error, such as displaying an error message to the user
                         });
 
 
             } catch (Exception e) {
                 e.printStackTrace();
-                Log.i("BECHJ", "excel.Export :: exportTest() :: ERROR: " + e.getMessage());
+                Log.i("TAGMAIN", "excel.Export :: exportTest() :: ERROR: " + e.getMessage());
             }
         } catch (IOException e) {
             e.printStackTrace();
-            Log.i("BECHJ", "excel.Export :: exportTest() :: ERROR: " + e.getMessage());
+            Log.i("TAGMAIN", "excel.Export :: exportTest() :: ERROR: " + e.getMessage());
         }
     }
 
@@ -224,12 +224,12 @@ public class Export {
                     workbook.write(fileOut);
                 } catch (Exception e) {
                     e.printStackTrace();
-                    Log.i("BECHJ", "excel.Export :: exportMemberToExcel() :: isExternalStorageWritable() :: ERROR: " + e.getMessage());
+                    Log.i("TAGMAIN", "excel.Export :: exportMemberToExcel() :: isExternalStorageWritable() :: ERROR: " + e.getMessage());
                 }
             }
         } catch (IOException e) {
             e.printStackTrace();
-            Log.i("BECHJ", "excel.Export :: exportMemberToExcel() :: ERROR: " + e.getMessage());
+            Log.i("TAGMAIN", "excel.Export :: exportMemberToExcel() :: ERROR: " + e.getMessage());
         }
     }
 }
