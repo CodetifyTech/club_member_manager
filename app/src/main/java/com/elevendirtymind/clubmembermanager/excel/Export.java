@@ -62,7 +62,7 @@ public class Export {
 
             // Create a row above the header
             Row timeRow = sheet.createRow(0);
-            timeRow.createCell(0).setCellValue("Thời Gian: " );
+            timeRow.createCell(0).setCellValue("Thời Gian: ");
             timeRow.createCell(1).setCellValue(dateTime);
 
             // Create header row
@@ -74,7 +74,7 @@ public class Export {
             }
 
             // Populate data rows
-            for (int i = 0; i < members.size(); i++) {
+            for (int i = 1; i < members.size(); i++) {
                 Member member = members.get(i);
                 Row row = sheet.createRow(i + 1);
                 row.createCell(0).setCellValue(member.getMaSinhVien());
@@ -106,7 +106,7 @@ public class Export {
                  * Uploads to firebase Storage
                  */
                 Uri fileUri = Uri.fromFile(file);
-                Log.i("TAGMAIN", "excel.Export :: exportTest() ::  filePath() : " + fileUri.getPath() );
+                Log.i("TAGMAIN", "excel.Export :: exportTest() ::  filePath() : " + fileUri.getPath());
                 String fileName = "members.xlsx";
                 storageRef = memberApplication.getFireStorage().getReference();
                 StorageReference fileRef = storageRef.child(fileName);
@@ -119,7 +119,7 @@ public class Export {
                     public void onFailure(@NonNull Exception exception) {
                         // Handle unsuccessful uploads
                         exception.printStackTrace();
-                        Log.i("TAGMAIN", "excel.Export :: exportTest() :: Firebase :: ERROR: " +exception.getMessage() );
+                        Log.i("TAGMAIN", "excel.Export :: exportTest() :: Firebase :: ERROR: " + exception.getMessage());
                     }
                 }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                     @Override
@@ -127,7 +127,6 @@ public class Export {
                         // taskSnapshot.getMetadata() contains file metadata such as size, content-type, etc.
                         // ...
                         Log.i("TAGMAIN", "excel.Export :: exportTest() :: Firease: DONE");
-                        Toast.makeText(context, "Bạn có thể tìm thấy `members.xlsx` trong thư mục Download của thiết bị", Toast.LENGTH_LONG).show();
                     }
                 }).addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
                     @Override
@@ -146,7 +145,6 @@ public class Export {
                                 // If the file already exists, overwrite it
                                 fileRef.putStream(stream);
                                 Log.d("TAGMAIN", "onCompleteListenter() OVERRIDE :: Upload done");
-                                Toast.makeText(context, "Bạn có thể tìm thấy `members.xlsx` trong thư mục Download của thiết bị", Toast.LENGTH_LONG).show();
                             }
                         }
                     }
@@ -166,7 +164,9 @@ public class Export {
                 File downloadsDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);
                 File localFile = new File(downloadsDir, "members.xlsx");
 
-                fileRef.getFile(localFile)
+                fileRef.getFile(localFile).addOnCompleteListener(task -> {
+                            Toast.makeText(context, "Bạn có thể tìm thấy `members.xlsx` trong thư mục Download của thiết bị", Toast.LENGTH_LONG).show();
+                        })
                         .addOnSuccessListener(taskSnapshot -> {
                             // File TAGMAIN success
                             Log.d("TAGMAIN", "excel.Export :: exportTest() :: Firease: File downloaded to " + localFile.getAbsolutePath());
