@@ -41,14 +41,10 @@
                 android:enabled="false"
                 android:inputType="text"
                 android:onTextChanged="@{memberModelViewModel::updateHoTen}"
-                android:shadowColor="@color/black"
-                android:shadowDx="7"
-                android:shadowDy="7"
-                android:shadowRadius="20"
                 android:text="@{memberModelViewModel.liveMember.hoTen}"
                 android:textAlignment="center"
                 android:textAllCaps="true"
-                android:textColor="@color/white"
+                android:textColor="@color/black"
                 android:textSize="24sp"
                 android:textStyle="bold" />
         </com.google.android.material.textfield.TextInputLayout>
@@ -68,12 +64,8 @@
                 android:enabled="false"
                 android:inputType="text"
                 android:onTextChanged="@{memberModelViewModel::updateMaSinhVien}"
-                android:shadowColor="@color/black"
-                android:shadowDx="7"
-                android:shadowDy="7"
-                android:shadowRadius="20"
                 android:text="@{memberModelViewModel.liveMember.maSinhVien}"
-                android:textColor="@color/white"
+                android:textColor="@color/black"
                 android:textStyle="bold" />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -92,12 +84,8 @@
                 android:enabled="false"
                 android:inputType="phone"
                 android:onTextChanged="@{memberModelViewModel::updateSDT}"
-                android:shadowColor="@color/black"
-                android:shadowDx="7"
-                android:shadowDy="7"
-                android:shadowRadius="20"
                 android:text="@{memberModelViewModel.liveMember.sdt}"
-                android:textColor="@color/white"
+                android:textColor="@color/black"
                 android:textStyle="bold" />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -106,7 +94,6 @@
             android:layout_height="70dp"
             android:layout_margin="4dp"
             android:layout_weight="1"
-
             android:hint="Quê Quán"
             android:textColorHint="@color/black">
 
@@ -117,12 +104,8 @@
                 android:enabled="false"
                 android:inputType="text"
                 android:onTextChanged="@{memberModelViewModel::updateQueQuan}"
-                android:shadowColor="@color/black"
-                android:shadowDx="7"
-                android:shadowDy="7"
-                android:shadowRadius="20"
                 android:text="@{memberModelViewModel.liveMember.queQuan}"
-                android:textColor="@color/white"
+                android:textColor="@color/black"
                 android:textStyle="bold" />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -132,7 +115,6 @@
             android:layout_margin="4dp"
             android:layout_weight="1"
             android:hint="Chức vụ trong câu lạc bộ"
-            android:textColor="@color/white"
             android:textColorHint="@color/black">
 
             <EditText
@@ -141,12 +123,9 @@
                 android:layout_height="match_parent"
                 android:enabled="false"
                 android:onTextChanged="@{memberModelViewModel::updateRole}"
-                android:shadowColor="@color/black"
-                android:shadowDx="7"
-                android:shadowDy="7"
-                android:shadowRadius="20"
                 android:text="@{memberModelViewModel.liveMember.role}"
-                android:textColor="@color/white"
+                android:textColor="@color/black"
+                android:inputType="text"
                 android:textStyle="bold" />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -165,12 +144,8 @@
                 android:enabled="false"
                 android:inputType="text"
                 android:onTextChanged="@{memberModelViewModel::updateChuyenNganh}"
-                android:shadowColor="@color/black"
-                android:shadowDx="7"
-                android:shadowDy="7"
-                android:shadowRadius="20"
                 android:text="@{memberModelViewModel.liveMember.chuyenNganh}"
-                android:textColor="@color/white"
+                android:textColor="@color/black"
                 android:textStyle="bold" />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -189,12 +164,8 @@
                 android:enabled="false"
                 android:inputType="text"
                 android:onTextChanged="@{memberModelViewModel::updateKhoa}"
-                android:shadowColor="@color/black"
-                android:shadowDx="7"
-                android:shadowDy="7"
-                android:shadowRadius="20"
                 android:text="@{memberModelViewModel.liveMember.khoa}"
-                android:textColor="@color/white"
+                android:textColor="@color/black"
                 android:textStyle="bold" />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -213,12 +184,8 @@
                 android:enabled="false"
                 android:inputType="text"
                 android:onTextChanged="@{memberModelViewModel::updateLop}"
-                android:shadowColor="@color/black"
-                android:shadowDx="7"
-                android:shadowDy="7"
-                android:shadowRadius="20"
                 android:text="@{memberModelViewModel.liveMember.lop}"
-                android:textColor="@color/white"
+                android:textColor="@color/black"
                 android:textStyle="bold" />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -236,9 +203,12 @@
                 android:id="@+id/buttonCancel"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                android:layout_marginStart="20dp"
-                android:layout_marginEnd="20dp"
-                android:background="@drawable/simple_table_border"
+                android:layout_marginStart="1dp"
+                android:layout_marginTop="1dp"
+                android:layout_marginEnd="2dp"
+                android:layout_marginBottom="1dp"
+                android:background="@drawable/animated_simple_button_background"
+                android:clickable="true"
                 android:gravity="center"
                 android:onClick="@{onClickUpdateInfo::onClickCancel}"
                 android:padding="6dp"
@@ -252,20 +222,19 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginStart="20dp"
-                android:layout_marginEnd="20dp"
-                android:background="@drawable/simple_button_backgound"
+                android:layout_marginStart="2dp"
+                android:layout_marginTop="1dp"
+                android:layout_marginEnd="1dp"
+                android:layout_marginBottom="1dp"
+                android:background="@drawable/animated_simple_button_background"
+                android:clickable="true"
                 android:gravity="center"
                 android:onClick="@{onClickUpdateInfo::onClickUpdate}"
                 android:padding="10dp"
-                android:shadowColor="@color/black"
-                android:shadowDx="7"
-                android:shadowDy="7"
-                android:shadowRadius="7"
                 android:text="CHỈNH SỬA THÔNG TIN"
                 android:textAlignment="center"
                 android:textAllCaps="true"
-                android:textColor="@color/white"
+                android:textColor="@color/black"
                 android:textSize="20sp"
                 android:textStyle="bold" />
         </LinearLayout>

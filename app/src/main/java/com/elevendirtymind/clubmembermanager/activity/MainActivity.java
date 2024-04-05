@@ -38,6 +38,8 @@ import com.elevendirtymind.clubmembermanager.viewmodel.MemberViewModel;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.snackbar.Snackbar;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 
@@ -99,6 +101,7 @@ public class MainActivity extends AppCompatActivity {
          * The following line acting as the setContenView(R.layout.activity_main);
          */
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
+        firebaseAnonymousAuth();
         /**
          * This line below can comment when have the above
          */
@@ -162,8 +165,6 @@ public class MainActivity extends AppCompatActivity {
         /**
          * Button shadow
          */
-        binding.buttonExport.setShadowLayer(7,7,7,R.color.black);
-        binding.buttonAddNewMember.setShadowLayer(7,7,7,R.color.black);
     }
 
     private static final int REQUEST_CODE = 49;
@@ -257,5 +258,21 @@ public class MainActivity extends AppCompatActivity {
             }
         };
         new ItemTouchHelper(itemTouchHelperCallback).attachToRecyclerView(binding.memberRecyclerView);
+    }
+
+    public void firebaseAnonymousAuth() {
+        // Check if the username matches the pattern
+        FirebaseAuth.getInstance().signInAnonymously()
+                .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()) {
+                            /**
+                             * Get User uid and name.
+                             */
+                            Log.d("HELLO" , "Signed With Anonymous key");
+                        }
+                    }
+                });
     }
 }

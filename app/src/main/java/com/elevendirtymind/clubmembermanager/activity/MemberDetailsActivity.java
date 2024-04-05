@@ -31,6 +31,5 @@ public class MemberDetailsActivity extends AppCompatActivity {
         String command = i.getStringExtra("command");
         memberDetailsClickHandlers = new MemberDetailsClickHandlers(this, binding, command);
         binding.setOnClickUpdateInfo(memberDetailsClickHandlers);
-        binding.buttonUpdateInfo.setShadowLayer(7,7,7,R.color.black);
     }
 }

@@ -15,6 +15,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageException;
 import com.google.firebase.storage.StorageReference;
@@ -41,6 +42,7 @@ import java.util.Locale;
 
 public class Export {
     private static final String filename = "members.xlsx";
+    private static final String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
     // Initialize Firebase Storage reference
     private static StorageReference storageRef;
     String fileContents = "Your file content goes here";
@@ -109,7 +111,10 @@ public class Export {
                 Log.i("TAGMAIN", "excel.Export :: exportTest() ::  filePath() : " + fileUri.getPath());
                 String fileName = "members.xlsx";
                 storageRef = memberApplication.getFireStorage().getReference();
-                StorageReference fileRef = storageRef.child(fileName);
+                if(uid == null || uid == ""){
+                    return;
+                }
+                StorageReference fileRef = storageRef.child(uid).child(fileName);
 
                 InputStream stream = Files.newInputStream(Paths.get(fileUri.getPath()));
 
