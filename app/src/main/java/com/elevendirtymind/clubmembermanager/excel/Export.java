@@ -15,6 +15,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageException;
 import com.google.firebase.storage.StorageReference;
@@ -41,6 +42,7 @@ import java.util.Locale;
 
 public class Export {
     private static final String filename = "members.xlsx";
+    private static final String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
     // Initialize Firebase Storage reference
     private static StorageReference storageRef;
     String fileContents = "Your file content goes here";
@@ -74,8 +76,8 @@ public class Export {
             }
 
             // Populate data rows
-            for (int i = 1; i < members.size(); i++) {
-                Member member = members.get(i);
+            for (int i = 1; i <= members.size(); i++) {
+                Member member = members.get(i-1);
                 Row row = sheet.createRow(i + 1);
                 row.createCell(0).setCellValue(member.getMaSinhVien());
                 row.createCell(1).setCellValue(member.getHoTen());
@@ -109,7 +111,10 @@ public class Export {
                 Log.i("TAGMAIN", "excel.Export :: exportTest() ::  filePath() : " + fileUri.getPath());
                 String fileName = "members.xlsx";
                 storageRef = memberApplication.getFireStorage().getReference();
-                StorageReference fileRef = storageRef.child(fileName);
+                if(uid == null || uid == ""){
+                    return;
+                }
+                StorageReference fileRef = storageRef.child(uid).child(fileName);
 
                 InputStream stream = Files.newInputStream(Paths.get(fileUri.getPath()));
 
@@ -189,12 +194,22 @@ public class Export {
         }
     }
 
-    public static void exportMembersToExcel(List<Member> members) {
+    public static void uploadExcel(@NonNull Context context, @NonNull MemberApplication memberApplication, @NonNull List<Member> members) {
         try (Workbook workbook = new XSSFWorkbook()) {
             Sheet sheet = workbook.createSheet("Members");
 
+            // Get the current date and time
+            String pattern = "dd/MM/yyyy HH:mm:ss"; // Define the date and time format
+            DateFormat dateFormat = DateFormat.getDateTimeInstance(DateFormat.DEFAULT, DateFormat.DEFAULT, Locale.getDefault());
+            String dateTime = dateFormat.format(new Date());
+
+            // Create a row above the header
+            Row timeRow = sheet.createRow(0);
+            timeRow.createCell(0).setCellValue("Thời Gian: ");
+            timeRow.createCell(1).setCellValue(dateTime);
+
             // Create header row
-            Row headerRow = sheet.createRow(0);
+            Row headerRow = sheet.createRow(1);
             String[] headers = {"Mã Sinh Viên", "Họ và Tên", "Số Điện Thoại", "Quê Quán", "Chức Vụ", "Chuyên Ngành", "Khoa", "Lớp"};
             for (int i = 0; i < headers.length; i++) {
                 Cell cell = headerRow.createCell(i);
@@ -202,8 +217,8 @@ public class Export {
             }
 
             // Populate data rows
-            for (int i = 0; i < members.size(); i++) {
-                Member member = members.get(i);
+            for (int i = 1; i <= members.size(); i++) {
+                Member member = members.get(i-1);
                 Row row = sheet.createRow(i + 1);
                 row.createCell(0).setCellValue(member.getMaSinhVien());
                 row.createCell(1).setCellValue(member.getHoTen());
@@ -215,21 +230,78 @@ public class Export {
                 row.createCell(7).setCellValue(member.getLop());
             }
 
-            // Check if external storage is available
-            if (isExternalStorageWritable()) {
-                // Get the Downloads directory
-                File downloadsDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);
-                // Write to file
-                try (FileOutputStream fileOut = new FileOutputStream("members.xlsx")) {
-                    workbook.write(fileOut);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                    Log.i("TAGMAIN", "excel.Export :: exportMemberToExcel() :: isExternalStorageWritable() :: ERROR: " + e.getMessage());
+            // Get the directory for the app's internal files
+            File internalDir = context.getFilesDir();
+            Log.i("TAGMAIN", "excel.Export :: exportTest() :: internalDir: " + internalDir.getAbsolutePath());
+
+            // Specify the file path in internal storage
+            File file = new File(internalDir, "members.xlsx");
+            /**
+             * /data/user/0/com.elevendirtymind.clubmembermanager/files
+             */
+            // Write to file
+            try (FileOutputStream fileOut = new FileOutputStream(file)) {
+                workbook.write(fileOut);
+                Log.i("TAGMAIN", "excel.Export :: exportTest() :: File written to internal storage: " + file.getAbsolutePath());
+
+
+                /**
+                 * Uploads to firebase Storage
+                 */
+                Uri fileUri = Uri.fromFile(file);
+                Log.i("TAGMAIN", "excel.Export :: exportTest() ::  filePath() : " + fileUri.getPath());
+                String fileName = "members.xlsx";
+                storageRef = memberApplication.getFireStorage().getReference();
+                if(uid == null || uid == ""){
+                    return;
                 }
+                StorageReference fileRef = storageRef.child(uid).child(fileName);
+
+                InputStream stream = Files.newInputStream(Paths.get(fileUri.getPath()));
+
+                UploadTask uploadTask = fileRef.putStream(stream);
+                uploadTask.addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception exception) {
+                        // Handle unsuccessful uploads
+                        exception.printStackTrace();
+                        Log.i("TAGMAIN", "excel.Export :: exportTest() :: Firebase :: ERROR: " + exception.getMessage());
+                    }
+                }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                    @Override
+                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                        // taskSnapshot.getMetadata() contains file metadata such as size, content-type, etc.
+                        // ...
+                        Log.i("TAGMAIN", "excel.Export :: exportTest() :: Firease: DONE");
+                    }
+                }).addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task) {
+                        if (task.isSuccessful()) {
+                            // The upload is successful
+                            Log.d("TAGMAIN", "onCompleteListenter() OVERRIDE :: Upload successful");
+                        } else {
+                            /**
+                             * Override the existing file on firebase
+                             */
+                            // The upload failed, handle error here
+                            Exception e = task.getException();
+                            if (e.getMessage() != null && e.getMessage().contains("object")) {
+                                // If the file already exists, overwrite it
+                                fileRef.putStream(stream);
+                                Log.d("TAGMAIN", "onCompleteListenter() OVERRIDE :: Upload done");
+                            }
+                        }
+                    }
+                });
+
+            } catch (Exception e) {
+                e.printStackTrace();
+                Log.i("TAGMAIN", "excel.Export :: exportTest() :: ERROR: " + e.getMessage());
             }
         } catch (IOException e) {
             e.printStackTrace();
-            Log.i("TAGMAIN", "excel.Export :: exportMemberToExcel() :: ERROR: " + e.getMessage());
+            Log.i("TAGMAIN", "excel.Export :: exportTest() :: ERROR: " + e.getMessage());
         }
     }
 }

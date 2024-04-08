@@ -42,15 +42,11 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:enabled="false"
-                    android:shadowColor="@color/black"
-                    android:shadowDx="7"
-                    android:shadowDy="7"
-                    android:shadowRadius="20"
                     android:text="@={member.hoTen}"
                     android:inputType="text"
                     android:textAlignment="center"
                     android:textAllCaps="true"
-                    android:textColor="@color/white"
+                    android:textColor="@color/black"
                     android:textSize="24sp"
                     android:textStyle="bold" />
             </com.google.android.material.textfield.TextInputLayout>
@@ -69,12 +65,8 @@
                     android:layout_height="match_parent"
                     android:enabled="false"
                     android:inputType="text"
-                    android:shadowColor="@color/black"
-                    android:shadowDx="7"
-                    android:shadowDy="7"
-                    android:shadowRadius="20"
                     android:text="@={member.maSinhVien}"
-                    android:textColor="@color/white"
+                    android:textColor="@color/black"
                     android:textStyle="bold" />
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -92,12 +84,8 @@
                     android:layout_height="match_parent"
                     android:enabled="false"
                     android:inputType="phone"
-                    android:shadowColor="@color/black"
-                    android:shadowDx="7"
-                    android:shadowDy="7"
-                    android:shadowRadius="20"
                     android:text="@={member.sdt}"
-                    android:textColor="@color/white"
+                    android:textColor="@color/black"
                     android:textStyle="bold" />
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -106,7 +94,6 @@
                 android:layout_height="70dp"
                 android:layout_margin="4dp"
                 android:layout_weight="1"
-
                 android:hint="Quê Quán"
                 android:textColorHint="@color/black">
 
@@ -115,13 +102,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:enabled="false"
-                    android:shadowColor="@color/black"
-                    android:shadowDx="7"
                     android:inputType="text"
-                    android:shadowDy="7"
-                    android:shadowRadius="20"
                     android:text="@={member.queQuan}"
-                    android:textColor="@color/white"
+                    android:textColor="@color/black"
                     android:textStyle="bold" />
             </com.google.android.material.textfield.TextInputLayout>
         </androidx.appcompat.widget.LinearLayoutCompat>
@@ -139,20 +122,14 @@
                 android:layout_margin="4dp"
                 android:layout_weight="1"
                 android:hint="Chức vụ trong câu lạc bộ"
-                android:textColor="@color/white"
                 android:textColorHint="@color/black">
-
                 <EditText
                     android:id="@+id/editTextChucVu"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:enabled="false"
                     android:inputType="text"
-                    android:shadowColor="@color/black"
-                    android:shadowDx="7"
-                    android:shadowDy="7"
-                    android:textColor="@color/white"
-                    android:shadowRadius="20"
+                    android:textColor="@color/black"
                     android:text="@={member.role}"
                     android:textStyle="bold" />
             </com.google.android.material.textfield.TextInputLayout>
@@ -171,12 +148,8 @@
                     android:layout_height="match_parent"
                     android:enabled="false"
                     android:inputType="text"
-                    android:shadowColor="@color/black"
-                    android:shadowDx="7"
-                    android:shadowDy="7"
-                    android:shadowRadius="20"
                     android:text="@={member.chuyenNganh}"
-                    android:textColor="@color/white"
+                    android:textColor="@color/black"
                     android:textStyle="bold" />
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -194,12 +167,8 @@
                     android:layout_height="match_parent"
                     android:enabled="false"
                     android:inputType="text"
-                    android:shadowColor="@color/black"
-                    android:shadowDx="7"
-                    android:shadowDy="7"
-                    android:shadowRadius="20"
                     android:text="@={member.khoa}"
-                    android:textColor="@color/white"
+                    android:textColor="@color/black"
                     android:textStyle="bold" />
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -217,12 +186,8 @@
                     android:layout_height="match_parent"
                     android:enabled="false"
                     android:inputType="text"
-                    android:shadowColor="@color/black"
-                    android:shadowDx="7"
-                    android:shadowDy="7"
-                    android:shadowRadius="20"
                     android:text="@={member.lop}"
-                    android:textColor="@color/white"
+                    android:textColor="@color/black"
                     android:textStyle="bold" />
             </com.google.android.material.textfield.TextInputLayout>
         </LinearLayout>
@@ -243,7 +208,8 @@
                 android:layout_height="50dp"
                 android:layout_marginTop="30dp"
                 android:layout_marginBottom="30dp"
-                android:background="@drawable/simple_table_border"
+                android:clickable="true"
+                android:background="@drawable/animated_simple_button_background"
                 android:gravity="center"
                 android:onClick="@{onClickUpdateInfo::onClickCancel}"
                 android:padding="6dp"
@@ -259,18 +225,15 @@
                 android:layout_gravity="center"
                 android:layout_marginTop="30dp"
                 android:layout_marginBottom="30dp"
-                android:background="@drawable/simple_button_backgound"
+                android:clickable="true"
+                android:background="@drawable/animated_simple_button_background"
                 android:gravity="center"
                 android:onClick="@{onClickUpdateInfo::onClickUpdate}"
                 android:padding="10dp"
-                android:shadowColor="@color/black"
-                android:shadowDx="7"
-                android:shadowDy="7"
-                android:shadowRadius="7"
                 android:text="CHỈNH SỬA THÔNG TIN"
                 android:textAlignment="center"
                 android:textAllCaps="true"
-                android:textColor="@color/white"
+                android:textColor="@color/black"
                 android:textSize="20sp"
                 android:textStyle="bold" />
         </LinearLayout>

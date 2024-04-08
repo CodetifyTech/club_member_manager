@@ -26,6 +26,7 @@ public class MainActivityClickHandlers {
     private List<Member> memberList;
 
     private MemberApplication memberApplication;
+
     public MainActivityClickHandlers(@NonNull Activity activity, @NonNull ActivityMainBinding binding, @NonNull List<Member> memberList) {
         this.activity = activity;
         this.binding = binding;
@@ -35,21 +36,11 @@ public class MainActivityClickHandlers {
     }
 
     public void onClickAddNewMember(@NonNull View view) {
-        binding.buttonAddNewMember.setBackgroundResource(R.drawable.simple_button_background_onclick);
-        binding.buttonAddNewMember.setShadowLayer(0,7,7,R.color.black);
-        binding.buttonAddNewMember.setTextColor(Color.BLACK);
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                binding.buttonAddNewMember.setBackgroundResource(R.drawable.simple_button_backgound);
-                binding.buttonAddNewMember.setShadowLayer(7,7,7,R.color.black);
-                binding.buttonAddNewMember.setTextColor(Color.WHITE);
-                Intent i = new Intent(activity, MemberDetailsActivity.class);
-                i.putExtra("command", "INSERT");
-                activity.startActivity(i);
-                Log.i("TAGMAIN", "onClickAddNewMember() :: ADD NEW BUTTON CLICKED");
-            }
-        }, 100);
+
+        Intent i = new Intent(activity, MemberDetailsActivity.class);
+        i.putExtra("command", "INSERT");
+        activity.startActivity(i);
+        Log.i("TAGMAIN", "onClickAddNewMember() :: ADD NEW BUTTON CLICKED");
     }
 
     public void onClickMemberItem(@NonNull Member member, @NonNull int ClickPosition) {
@@ -63,19 +54,8 @@ public class MainActivityClickHandlers {
     }
 
 
-    public void onClickExport(@NonNull View view){
-        binding.buttonExport.setBackgroundResource(R.drawable.simple_button_background_onclick);
-        binding.buttonExport.setShadowLayer(0,7,7,R.color.black);
-        binding.buttonExport.setTextColor(Color.BLACK);
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                binding.buttonExport.setBackgroundResource(R.drawable.simple_button_backgound);
-                binding.buttonExport.setShadowLayer(7,7,7,R.color.black);
-                binding.buttonExport.setTextColor(Color.WHITE);
-                Export.exportTest(activity,memberApplication,memberList);
-                Log.i("TAGMAIN", "onClickExport() :: Export Clicked");
-            }
-        }, 100);
+    public void onClickExport(@NonNull View view) {
+        Export.exportTest(activity, memberApplication, memberList);
+        Log.i("TAGMAIN", "onClickExport() :: Export Clicked");
     }
 }

@@ -18,7 +18,10 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelStoreOwner;
 
 import com.elevendirtymind.clubmembermanager.R;
+import com.elevendirtymind.clubmembermanager.activity.MainActivity;
+import com.elevendirtymind.clubmembermanager.application.MemberApplication;
 import com.elevendirtymind.clubmembermanager.databinding.ActivityMemberDetailsBinding;
+import com.elevendirtymind.clubmembermanager.excel.Export;
 import com.elevendirtymind.clubmembermanager.firebase.RealTimeDatabaseRef;
 import com.elevendirtymind.clubmembermanager.model.Member;
 import com.elevendirtymind.clubmembermanager.viewmodel.MemberViewModel;
@@ -28,6 +31,9 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class MemberDetailsClickHandlers {
     private Activity activity;
     private ActivityMemberDetailsBinding binding;
@@ -36,8 +42,10 @@ public class MemberDetailsClickHandlers {
     private Member observedMember;
     private Member existingMemberInRoomDatabase;
     private String command;
+    private List<Member> memberList;
 
     private DatabaseReference memberRef;
+    private MemberApplication memberApplication;
 
     public MemberDetailsClickHandlers(@NonNull Activity activity, @NonNull ActivityMemberDetailsBinding binding, @NonNull String command) {
         /**
@@ -46,11 +54,21 @@ public class MemberDetailsClickHandlers {
         this.activity = activity;
         this.binding = binding;
         this.command = command;
+        this.memberApplication = new MemberApplication();
         this.memberRef = memberRef = FirebaseDatabase.getInstance().getReference(RealTimeDatabaseRef.refMain).child(RealTimeDatabaseRef.refMainChildMember);
         /**
          * Init View Model
          */
         memberViewModelRepos = new ViewModelProvider((ViewModelStoreOwner) this.activity).get(MemberViewModel.class);
+
+        memberList = new ArrayList<>();
+        memberViewModelRepos.getAllMembers().observe((LifecycleOwner) this.activity, new Observer<List<Member>>() {
+            @Override
+            public void onChanged(List<Member> members) {
+                memberList.clear();
+                memberList.addAll(members);
+            }
+        });
         memberModelViewModel = new ViewModelProvider((ViewModelStoreOwner) this.activity).get(ModelMemberViewModel.class);
         /**
          * Binding memberModelViewModel to the view
@@ -89,7 +107,7 @@ public class MemberDetailsClickHandlers {
             binding.editTextKhoa.setEnabled(true);
             binding.editTextLop.setEnabled(true);
             binding.editTextSDT.setEnabled(true);
-        } else if (command.equalsIgnoreCase("update")) {
+        } else if (command.equalsIgnoreCase("UPDATE")) {
             /**
              * Set backend for update action
              */
@@ -99,7 +117,7 @@ public class MemberDetailsClickHandlers {
                 public void onChanged(Member member) {
                     observedMember = member;
                     memberModelViewModel.updateLiveMember(observedMember);
-                    binding.setMember(memberModelViewModel.getLiveMember().getValue());
+                    binding.setMemberModelViewModel(memberModelViewModel);
                     Log.i("TAGMAIN", "MemberDetailsClickHandlers :: observing :: " + observedMember.toString());
                 }
             });
@@ -109,160 +127,153 @@ public class MemberDetailsClickHandlers {
     }
 
     public void onClickUpdate(@NonNull View view) {
-        binding.buttonUpdateInfo.setBackgroundResource(R.drawable.simple_button_background_onclick);
-        binding.buttonUpdateInfo.setShadowLayer(0,7,7,R.color.black);
-        binding.buttonUpdateInfo.setTextColor(Color.BLACK);
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                if (command.equalsIgnoreCase("insert")) {
+        if (command.equalsIgnoreCase("insert")) {
 
-                    if (binding.buttonUpdateInfo.getText().toString().equalsIgnoreCase("Thêm mới")) {
-                        if (TextUtils.isEmpty(binding.editTextHoTen.getText().toString()) ||
-                                TextUtils.isEmpty(binding.editTextMaSinhVien.getText().toString()) ||
-                                TextUtils.isEmpty(binding.editTextQueQuan.getText().toString()) ||
-                                TextUtils.isEmpty(binding.editTextChucVu.getText().toString()) ||
-                                TextUtils.isEmpty(binding.editTextChuyenNganh.getText().toString()) ||
-                                TextUtils.isEmpty(binding.editTextKhoa.getText().toString()) ||
-                                TextUtils.isEmpty(binding.editTextLop.getText().toString()) ||
-                                TextUtils.isEmpty(binding.editTextSDT.getText().toString())) {
+            if (binding.buttonUpdateInfo.getText().toString().equalsIgnoreCase("Thêm mới")) {
+                if (TextUtils.isEmpty(binding.editTextHoTen.getText().toString()) ||
+                        TextUtils.isEmpty(binding.editTextMaSinhVien.getText().toString()) ||
+                        TextUtils.isEmpty(binding.editTextQueQuan.getText().toString()) ||
+                        TextUtils.isEmpty(binding.editTextChucVu.getText().toString()) ||
+                        TextUtils.isEmpty(binding.editTextChuyenNganh.getText().toString()) ||
+                        TextUtils.isEmpty(binding.editTextKhoa.getText().toString()) ||
+                        TextUtils.isEmpty(binding.editTextLop.getText().toString()) ||
+                        TextUtils.isEmpty(binding.editTextSDT.getText().toString())) {
 
-                            // Display error message to the user
-                            Toast.makeText(activity, "Vui lòng điền đầy đủ thông tin", Toast.LENGTH_SHORT).show();
+                    // Display error message to the user
+                    Toast.makeText(activity, "Vui lòng điền đầy đủ thông tin", Toast.LENGTH_SHORT).show();
 
-                        } else {
-                            /**
-                             * Check if the database have this member (the one manager wanna add) exists or not
-                             */
-                            if (existingMemberInRoomDatabase == null) {
-                                memberViewModelRepos.InsertMember(binding.getMember());
-                                Toast.makeText(activity, "Thêm thành công", Toast.LENGTH_SHORT).show();
-                                /**
-                                 * Add firebase
-                                 */
-                                memberRef.child(observedMember.getMaSinhVien()).setValue(observedMember)
-                                        .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                            @Override
-                                            public void onSuccess(Void unused) {
-                                                Toast.makeText(activity, "Đã lưu thay đổi trên Firebase", Toast.LENGTH_SHORT).show();
-                                            }
-                                        })
-                                        .addOnFailureListener(new OnFailureListener() {
-                                            @Override
-                                            public void onFailure(@NonNull Exception e) {
-                                                Toast.makeText(activity, "Có lỗi khi lưu thay đổi trên Firebase", Toast.LENGTH_SHORT).show();
-                                            }
-                                        });
-                            } else if (!binding.getMember().equals(existingMemberInRoomDatabase)) {
-                                memberViewModelRepos.InsertMember(binding.getMember());
-                                Toast.makeText(activity, "Thêm thành công", Toast.LENGTH_SHORT).show();
-                                /**
-                                 * Add firebase
-                                 *
-                                 */
-                                memberRef.child(observedMember.getMaSinhVien()).setValue(observedMember)
-                                        .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                            @Override
-                                            public void onSuccess(Void unused) {
-                                                Toast.makeText(activity, "Đã lưu thay đổi trên Firebase", Toast.LENGTH_SHORT).show();
-                                            }
-                                        })
-                                        .addOnFailureListener(new OnFailureListener() {
-                                            @Override
-                                            public void onFailure(@NonNull Exception e) {
-                                                Toast.makeText(activity, "Có lỗi khi lưu thay đổi trên Firebase", Toast.LENGTH_SHORT).show();
-                                            }
-                                        });
-                            } else {
-                                Toast.makeText(activity, "Thêm thất bại! Mã thành viên đã có trong danh sách", Toast.LENGTH_SHORT).show();
-                            }
-                            //Toast.makeText(activity, "SOON", Toast.LENGTH_SHORT).show();
-                        }
-                    } else {
-                        Toast.makeText(activity, "Lỗi chương trình, vui lòng thoát ra vào lại!", Toast.LENGTH_LONG).show();
-                    }
-                } else if (command.equalsIgnoreCase("update")) {
-                    if (binding.buttonUpdateInfo.getText().toString().equalsIgnoreCase("Xác nhận đổi")) {
-                        if (TextUtils.isEmpty(binding.editTextHoTen.getText().toString()) ||
-                                TextUtils.isEmpty(binding.editTextQueQuan.getText().toString()) ||
-                                TextUtils.isEmpty(binding.editTextChucVu.getText().toString()) ||
-                                TextUtils.isEmpty(binding.editTextChuyenNganh.getText().toString()) ||
-                                TextUtils.isEmpty(binding.editTextKhoa.getText().toString()) ||
-                                TextUtils.isEmpty(binding.editTextLop.getText().toString()) ||
-                                TextUtils.isEmpty(binding.editTextSDT.getText().toString())) {
+                } else {
+                    /**
+                     * Check if the database have this member (the one manager wanna add) exists or not
+                     */
+                    if (existingMemberInRoomDatabase == null) {
+                        memberViewModelRepos.InsertMember(binding.getMember());
 
-                            // Display error message to the user
-                            Toast.makeText(activity, "Vui lòng điền đầy đủ thông tin", Toast.LENGTH_SHORT).show();
-
-                        } else {
-                            /**
-                             * Confirm the changes
-                             */
-                            memberViewModelRepos.UpdateMember(observedMember);
-                            /**
-                             * Update on firebase
-                             */
-                            DatabaseReference memberRef = FirebaseDatabase.getInstance().getReference(RealTimeDatabaseRef.refMain).child(RealTimeDatabaseRef.refMainChildMember).child(observedMember.getMaSinhVien());
-                            memberRef.updateChildren(observedMember.toMap())
-                                    .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                        @Override
-                                        public void onSuccess(Void unused) {
-                                            Toast.makeText(activity, "Đã lưu thay đổi trên Firebase", Toast.LENGTH_SHORT).show();
-                                        }
-                                    })
-                                    .addOnFailureListener(new OnFailureListener() {
-                                        @Override
-                                        public void onFailure(@NonNull Exception e) {
-                                            Toast.makeText(activity, "Có lỗi khi lưu thay đổi trên Firebase", Toast.LENGTH_SHORT).show();
-                                        }
-                                    }); // Assuming observedMember.toMap() converts the Member object to a Map
-                            /**
-                             * Disable the edit fields
-                             */
-                            binding.editTextHoTen.setEnabled(false);
-                            binding.editTextQueQuan.setEnabled(false);
-                            binding.editTextChucVu.setEnabled(false);
-                            binding.editTextChuyenNganh.setEnabled(false);
-                            binding.editTextKhoa.setEnabled(false);
-                            binding.editTextLop.setEnabled(false);
-                            binding.editTextSDT.setEnabled(false);
-                            binding.buttonUpdateInfo.setText("Chỉnh Sửa Thông Tin");
-                            Toast.makeText(activity, "Đã lưu thay đổi", Toast.LENGTH_SHORT).show();
-                        }
-                    } else {
+                        Toast.makeText(activity, "Thêm thành công", Toast.LENGTH_SHORT).show();
                         /**
-                         * Enable the edit fields
+                         * Add firebase
                          */
-                        binding.editTextHoTen.setEnabled(true);
-                        binding.editTextQueQuan.setEnabled(true);
-                        binding.editTextChucVu.setEnabled(true);
-                        binding.editTextChuyenNganh.setEnabled(true);
-                        binding.editTextKhoa.setEnabled(true);
-                        binding.editTextLop.setEnabled(true);
-                        binding.editTextSDT.setEnabled(true);
-                        binding.buttonUpdateInfo.setText("Xác nhận đổi");
-                        Toast.makeText(activity, "Đã có thể chỉnh sửa các trường thông tin", Toast.LENGTH_SHORT).show();
+                        memberRef.child(observedMember.getMaSinhVien()).setValue(observedMember)
+                                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                    @Override
+                                    public void onSuccess(Void unused) {
+                                        /**
+                                         * Update File excel
+                                         */
+                                        Export.uploadExcel(activity,memberApplication,memberList);
+                                        Toast.makeText(activity, "Đã lưu thay đổi trên Firebase", Toast.LENGTH_SHORT).show();
+                                    }
+                                })
+                                .addOnFailureListener(new OnFailureListener() {
+                                    @Override
+                                    public void onFailure(@NonNull Exception e) {
+                                        Toast.makeText(activity, "Có lỗi khi lưu thay đổi trên Firebase", Toast.LENGTH_SHORT).show();
+                                    }
+                                });
+
+                    } else if (!binding.getMember().equals(existingMemberInRoomDatabase)) {
+                        memberViewModelRepos.InsertMember(binding.getMember());
+                        Toast.makeText(activity, "Thêm thành công", Toast.LENGTH_SHORT).show();
+                        /**
+                         * Add firebase
+                         *
+                         */
+                        memberRef.child(observedMember.getMaSinhVien()).setValue(observedMember)
+                                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                    @Override
+                                    public void onSuccess(Void unused) {
+                                        /**
+                                         * Update File excel
+                                         */
+                                        Export.uploadExcel(activity,memberApplication,memberList);
+                                        Toast.makeText(activity, "Đã lưu thay đổi trên Firebase", Toast.LENGTH_SHORT).show();
+                                    }
+                                })
+                                .addOnFailureListener(new OnFailureListener() {
+                                    @Override
+                                    public void onFailure(@NonNull Exception e) {
+                                        Toast.makeText(activity, "Có lỗi khi lưu thay đổi trên Firebase", Toast.LENGTH_SHORT).show();
+                                    }
+                                });
+                    } else {
+                        Toast.makeText(activity, "Thêm thất bại! Mã thành viên đã có trong danh sách", Toast.LENGTH_SHORT).show();
                     }
+                    //Toast.makeText(activity, "SOON", Toast.LENGTH_SHORT).show();
                 }
-                binding.buttonUpdateInfo.setBackgroundResource(R.drawable.simple_button_backgound);
-                binding.buttonUpdateInfo.setShadowLayer(7,7,7,R.color.black);
-                binding.buttonUpdateInfo.setTextColor(Color.WHITE);
-                Log.i("TAGMAIN", "MemberDetailsClickHandlers ::  onClickUpdate():: " + "EDIT MEMBER BUTTON BUTTON CLICKED");
+            } else {
+                Toast.makeText(activity, "Lỗi chương trình, vui lòng thoát ra vào lại!", Toast.LENGTH_LONG).show();
             }
-        }, 100);
+        } else if (command.equalsIgnoreCase("update")) {
+            if (binding.buttonUpdateInfo.getText().toString().equalsIgnoreCase("Xác nhận đổi")) {
+                if (TextUtils.isEmpty(binding.editTextHoTen.getText().toString()) ||
+                        TextUtils.isEmpty(binding.editTextQueQuan.getText().toString()) ||
+                        TextUtils.isEmpty(binding.editTextChucVu.getText().toString()) ||
+                        TextUtils.isEmpty(binding.editTextChuyenNganh.getText().toString()) ||
+                        TextUtils.isEmpty(binding.editTextKhoa.getText().toString()) ||
+                        TextUtils.isEmpty(binding.editTextLop.getText().toString()) ||
+                        TextUtils.isEmpty(binding.editTextSDT.getText().toString())) {
+
+                    // Display error message to the user
+                    Toast.makeText(activity, "Vui lòng điền đầy đủ thông tin", Toast.LENGTH_SHORT).show();
+
+                } else {
+                    /**
+                     * Confirm the changes
+                     */
+                    memberViewModelRepos.UpdateMember(observedMember);
+                    /**
+                     * Update on firebase
+                     */
+                    DatabaseReference memberRef = FirebaseDatabase.getInstance().getReference(RealTimeDatabaseRef.refMain).child(RealTimeDatabaseRef.refMainChildMember).child(observedMember.getMaSinhVien());
+                    memberRef.updateChildren(observedMember.toMap())
+                            .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                @Override
+                                public void onSuccess(Void unused) {
+                                    /**
+                                     * Update File excel
+                                     */
+                                    Export.uploadExcel(activity,memberApplication,memberList);
+                                    Toast.makeText(activity, "Đã lưu thay đổi trên Firebase", Toast.LENGTH_SHORT).show();
+                                }
+                            })
+                            .addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception e) {
+                                    Toast.makeText(activity, "Có lỗi khi lưu thay đổi trên Firebase", Toast.LENGTH_SHORT).show();
+                                }
+                            }); // Assuming observedMember.toMap() converts the Member object to a Map
+                    /**
+                     * Disable the edit fields
+                     */
+                    binding.editTextHoTen.setEnabled(false);
+                    binding.editTextQueQuan.setEnabled(false);
+                    binding.editTextChucVu.setEnabled(false);
+                    binding.editTextChuyenNganh.setEnabled(false);
+                    binding.editTextKhoa.setEnabled(false);
+                    binding.editTextLop.setEnabled(false);
+                    binding.editTextSDT.setEnabled(false);
+                    binding.buttonUpdateInfo.setText("Chỉnh Sửa Thông Tin");
+                    Toast.makeText(activity, "Đã lưu thay đổi", Toast.LENGTH_SHORT).show();
+                }
+            } else {
+                /**
+                 * Enable the edit fields
+                 */
+                binding.editTextHoTen.setEnabled(true);
+                binding.editTextQueQuan.setEnabled(true);
+                binding.editTextChucVu.setEnabled(true);
+                binding.editTextChuyenNganh.setEnabled(true);
+                binding.editTextKhoa.setEnabled(true);
+                binding.editTextLop.setEnabled(true);
+                binding.editTextSDT.setEnabled(true);
+                binding.buttonUpdateInfo.setText("Xác nhận đổi");
+                Toast.makeText(activity, "Đã có thể chỉnh sửa các trường thông tin", Toast.LENGTH_SHORT).show();
+            }
+        }
     }
 
     public void onClickCancel(@NonNull View view) {
-        binding.buttonCancel.setBackgroundResource(R.drawable.simple_button_background_onclick);
-        binding.buttonCancel.setTextColor(Color.BLACK);
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                binding.buttonCancel.setBackgroundResource(R.drawable.simple_table_border);
-                binding.buttonCancel.setTextColor(Color.RED);
-                Log.i("TAGMAIN", "MemberDetailsClickHandlers :: onClickCancel :: " + "EDIT MEMBER BUTTON BUTTON CLICKED");
-                activity.finish();
-            }
-        }, 100);
+        Log.i("TAGMAIN", "MemberDetailsClickHandlers :: onClickCancel :: " + "EDIT MEMBER BUTTON BUTTON CLICKED");
+        activity.finish();
     }
 }
